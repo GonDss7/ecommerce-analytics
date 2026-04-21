@@ -1,0 +1,246 @@
+
+<h2 class="sr-only">Dashboard de e-commerce 2025 con métricas de ingresos, canales, devoluciones y stock</h2>
+
+<style>
+  .dash { padding: 1rem 0; font-family: var(--font-sans); }
+  .section-title { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; color: var(--color-text-secondary); text-transform: uppercase; margin: 0 0 10px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 1.5rem; }
+  .kpi { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 14px 16px; }
+  .kpi-label { font-size: 11px; color: var(--color-text-secondary); margin: 0 0 4px; }
+  .kpi-value { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin: 0; }
+  .kpi-sub { font-size: 11px; color: var(--color-text-secondary); margin: 3px 0 0; }
+  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 1.5rem; }
+  .chart-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 16px; }
+  .bottom-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; font-size: 11px; color: var(--color-text-secondary); }
+  .legend span { display: flex; align-items: center; gap: 4px; }
+  .dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+</style>
+
+<div class="dash">
+  <p class="section-title">resumen 2025</p>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <p class="kpi-label">Ingresos brutos</p>
+      <p class="kpi-value">$65.2B</p>
+      <p class="kpi-sub">100.000 transacciones</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi-label">Ingresos netos</p>
+      <p class="kpi-value">$58.5B</p>
+      <p class="kpi-sub">–10.2% comisiones</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi-label">Ticket promedio</p>
+      <p class="kpi-value">$652K</p>
+      <p class="kpi-sub">15.2 uds. por venta</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi-label">Devoluciones</p>
+      <p class="kpi-value">$371M</p>
+      <p class="kpi-sub">2.000 casos</p>
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <div class="chart-card">
+      <p class="section-title">ingresos mensuales</p>
+      <div class="legend">
+        <span><span class="dot" style="background:#378ADD;"></span>Online</span>
+        <span><span class="dot" style="background:#1D9E75; border-radius:50%;"></span>Tienda</span>
+      </div>
+      <div style="position:relative;height:200px;">
+        <canvas id="c1" role="img" aria-label="Ingresos mensuales por canal online y tienda 2025">Ingresos estables a lo largo del año, con canal online dominando levemente.</canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <p class="section-title">mix de canal</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center;">
+        <div style="position:relative;height:180px;">
+          <canvas id="c2" role="img" aria-label="Donut chart canal de ventas: 57% online, 43% tienda">Online 57%, Tienda 43%.</canvas>
+        </div>
+        <div>
+          <div style="margin-bottom:16px;">
+            <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 2px;">Online</p>
+            <p style="font-size:18px;font-weight:500;margin:0;">57%</p>
+            <p style="font-size:11px;color:var(--color-text-secondary);margin:2px 0 0;">56.971 ventas</p>
+          </div>
+          <div>
+            <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 2px;">Tienda física</p>
+            <p style="font-size:18px;font-weight:500;margin:0;">43%</p>
+            <p style="font-size:11px;color:var(--color-text-secondary);margin:2px 0 0;">43.029 ventas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <div class="chart-card">
+      <p class="section-title">ingresos por tamaño</p>
+      <div style="position:relative;height:160px;">
+        <canvas id="c3" role="img" aria-label="Ingresos por segmento de producto: medio lidera seguido de bajo y alto">Medio 49%, Bajo 41%, Alto 10%.</canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <p class="section-title">top 5 categorías</p>
+      <div style="position:relative;height:160px;">
+        <canvas id="c4" role="img" aria-label="Top 5 categorías por ingreso total">Categoría 19 lidera con $3.75B.</canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <p class="section-title">motivos de devolución</p>
+      <div style="position:relative;height:160px;">
+        <canvas id="c5" role="img" aria-label="Motivos de devolución: arrepentimiento, no coincide con foto, talle incorrecto, defectuoso, demora">Distribución pareja entre los 5 motivos.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+    <div class="chart-card">
+      <p class="section-title">compras a proveedores por mes</p>
+      <div style="position:relative;height:150px;">
+        <canvas id="c6" role="img" aria-label="Compras mensuales a proveedores 2025">Fluctúan entre $514M y $602M mensuales.</canvas>
+      </div>
+    </div>
+    <div class="chart-card" style="display:flex;flex-direction:column;justify-content:space-between;">
+      <p class="section-title">estructura de ingresos</p>
+      <div style="position:relative;height:150px;">
+        <canvas id="c7" role="img" aria-label="Waterfall: ingreso bruto vs comisiones vs ingreso neto">Ingreso neto $58.5B luego de comisiones de $6.7B.</canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+const textColor = isDark ? '#ccc' : '#666';
+const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+
+const baseOpts = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { display: false }, tooltip: { callbacks: {} } },
+  scales: {}
+};
+
+const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const online = [2939801109,2536873250,2986976203,2764214777,2939398556,2812793924,3003420995,2886354116,2793396448,2903761625,2728425659,2849659526].map(x=>+(x/1e9).toFixed(2));
+const tienda = [2657663175,2295832637,2666999961,2533400667,2604736450,2490808742,2592020042,2694280789,2639590813,2630887628,2547993585,2712232167].map(x=>+(x/1e9).toFixed(2));
+
+new Chart(document.getElementById('c1'), {
+  type: 'bar',
+  data: {
+    labels: meses,
+    datasets: [
+      { label: 'Online', data: online, backgroundColor: '#378ADD', stack: 's' },
+      { label: 'Tienda', data: tienda, backgroundColor: '#1D9E75', stack: 's', borderRadius: { topLeft: 4, topRight: 4 } }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: $${ctx.raw.toFixed(1)}B` } } },
+    scales: {
+      x: { stacked: true, ticks: { color: textColor, font: { size: 10 }, autoSkip: false, maxRotation: 0 }, grid: { display: false } },
+      y: { stacked: true, ticks: { color: textColor, font: { size: 10 }, callback: v => `$${v.toFixed(0)}B` }, grid: { color: gridColor } }
+    }
+  }
+});
+
+new Chart(document.getElementById('c2'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Online','Tienda'],
+    datasets: [{ data: [56.97, 43.03], backgroundColor: ['#378ADD','#1D9E75'], borderWidth: 0, hoverOffset: 4 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '65%',
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw.toFixed(1)}%` } } }
+  }
+});
+
+new Chart(document.getElementById('c3'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Medio','Bajo','Alto'],
+    datasets: [{ data: [49.1, 41.3, 9.6], backgroundColor: ['#7F77DD','#AFA9EC','#EEEDFE'], borderWidth: 0 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '60%',
+    plugins: {
+      legend: { display: true, position: 'right', labels: { font: { size: 11 }, color: textColor, boxWidth: 10, boxHeight: 10, padding: 8 } },
+      tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw}%` } }
+    }
+  }
+});
+
+const catLabels = ['Cat. 19','Cat. 2','Cat. 16','Cat. 10','Cat. 7'];
+const catVals = [3.75, 3.73, 3.72, 3.58, 3.49];
+new Chart(document.getElementById('c4'), {
+  type: 'bar',
+  data: {
+    labels: catLabels,
+    datasets: [{ data: catVals, backgroundColor: ['#378ADD','#4F9AE0','#67ACE6','#7FBFEB','#96D1F0'], borderRadius: 4 }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `$${ctx.raw}B` } } },
+    scales: {
+      x: { ticks: { color: textColor, font: { size: 10 }, callback: v => `$${v}B` }, grid: { color: gridColor } },
+      y: { ticks: { color: textColor, font: { size: 10 } }, grid: { display: false } }
+    }
+  }
+});
+
+const motivos = ['Arrepent.','No coincide','Talle inc.','Defectuoso','Demora'];
+const motiVals = [443, 422, 398, 379, 358];
+new Chart(document.getElementById('c5'), {
+  type: 'bar',
+  data: {
+    labels: motivos,
+    datasets: [{ data: motiVals, backgroundColor: '#D85A30', borderRadius: 4 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: textColor, font: { size: 9 }, autoSkip: false, maxRotation: 0 }, grid: { display: false } },
+      y: { ticks: { color: textColor, font: { size: 10 } }, grid: { color: gridColor } }
+    }
+  }
+});
+
+const compMes = [536.1,601.8,530.3,514.0,562.2,601.5,591.0,595.7,548.8,591.6,576.1,535.7];
+new Chart(document.getElementById('c6'), {
+  type: 'line',
+  data: {
+    labels: meses,
+    datasets: [{ data: compMes, borderColor: '#BA7517', backgroundColor: 'rgba(186,117,23,0.1)', tension: 0.35, fill: true, pointRadius: 3, pointBackgroundColor: '#BA7517' }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `$${ctx.raw.toFixed(0)}M` } } },
+    scales: {
+      x: { ticks: { color: textColor, font: { size: 10 }, autoSkip: false, maxRotation: 0 }, grid: { display: false } },
+      y: { ticks: { color: textColor, font: { size: 10 }, callback: v => `$${v}M` }, grid: { color: gridColor }, min: 480 }
+    }
+  }
+});
+
+new Chart(document.getElementById('c7'), {
+  type: 'bar',
+  data: {
+    labels: ['Ingreso bruto','Comisiones','Ingreso neto'],
+    datasets: [{ data: [65.2, -6.7, 58.5], backgroundColor: ['#378ADD','#E24B4A','#1D9E75'], borderRadius: 4 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `$${Math.abs(ctx.raw).toFixed(1)}B` } } },
+    scales: {
+      x: { ticks: { color: textColor, font: { size: 11 } }, grid: { display: false } },
+      y: { ticks: { color: textColor, font: { size: 10 }, callback: v => `$${v}B` }, grid: { color: gridColor } }
+    }
+  }
+});
+</script>

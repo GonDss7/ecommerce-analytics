@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Financiero 2025 — Gonzalo Dalmasso</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f5f3; color: #1a1a1a; padding: 2rem; }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #666; margin-bottom: 1.5rem; }
+  .st { font-size: 10px; font-weight: 500; letter-spacing: 0.07em; color: #888; text-transform: uppercase; margin: 0 0 10px; }
+  .kpi-g { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+  .kpi { background: #ececea; border-radius: 8px; padding: 12px 14px; }
+  .kpi-l { font-size: 10px; color: #888; margin: 0 0 3px; }
+  .kpi-v { font-size: 19px; font-weight: 500; color: #1a1a1a; margin: 0; }
+  .kpi-v.pos { color: #1D9E75; }
+  .kpi-v.neg { color: #E24B4A; }
+  .kpi-v.warn { color: #BA7517; }
+  .kpi-s { font-size: 10px; color: #888; margin: 2px 0 0; }
+  .r2 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .r3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .r2b { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .card { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: 12px; padding: 14px 16px; }
+  .leg { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; font-size: 10px; color: #666; }
+  .leg span { display: flex; align-items: center; gap: 4px; }
+  .sq { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+  .tbl { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 4px; }
+  .tbl th { font-size: 10px; font-weight: 500; color: #888; text-align: right; padding: 4px 6px; border-bottom: 0.5px solid rgba(0,0,0,0.1); }
+  .tbl th:first-child { text-align: left; }
+  .tbl td { padding: 5px 6px; text-align: right; color: #1a1a1a; border-bottom: 0.5px solid rgba(0,0,0,0.06); }
+  .tbl td:first-child { text-align: left; color: #666; }
+  .tbl tr:last-child td { font-weight: 500; border-top: 0.5px solid rgba(0,0,0,0.15); border-bottom: none; }
+  .red { color: #E24B4A !important; }
+  .grn { color: #1D9E75 !important; }
+  .bar-wrap { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+  .bar-row { display: flex; align-items: center; gap: 8px; font-size: 10px; }
+  .bar-label { width: 60px; color: #888; text-align: right; flex-shrink: 0; }
+  .bar-bg { flex: 1; height: 10px; background: #ececea; border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; background: #BA7517; }
+  .bar-val { width: 52px; color: #1a1a1a; font-weight: 500; text-align: right; flex-shrink: 0; }
+  footer { margin-top: 2rem; font-size: 11px; color: #aaa; text-align: center; }
+  @media (max-width: 700px) {
+    .kpi-g { grid-template-columns: 1fr 1fr; }
+    .r2, .r3, .r2b { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Dashboard Financiero / Contable 2025</h1>
+<p class="subtitle">Gonzalo Dalmasso Müller &nbsp;·&nbsp; Cashflow · IVA · Cuotas · Resultado neto estimado</p>
+
+<p class="st">resumen financiero anual</p>
+<div class="kpi-g">
+  <div class="kpi">
+    <p class="kpi-l">Ingresos brutos</p>
+    <p class="kpi-v">$65.2B</p>
+    <p class="kpi-s">100k transacciones</p>
+  </div>
+  <div class="kpi">
+    <p class="kpi-l">Cuotas cobradas 2025</p>
+    <p class="kpi-v pos">$57.9B</p>
+    <p class="kpi-s">88.8% del total</p>
+  </div>
+  <div class="kpi">
+    <p class="kpi-l">Cuotas por cobrar 2026</p>
+    <p class="kpi-v warn">$7.3B</p>
+    <p class="kpi-s">11.2% pendiente</p>
+  </div>
+  <div class="kpi">
+    <p class="kpi-l">IVA a pagar (neto)</p>
+    <p class="kpi-v neg">$3.6B</p>
+    <p class="kpi-s">Débito – crédito</p>
+  </div>
+  <div class="kpi">
+    <p class="kpi-l">Resultado neto est.</p>
+    <p class="kpi-v pos">$47.8B</p>
+    <p class="kpi-s">Tras comis. + compras</p>
+  </div>
+</div>
+
+<div class="r2">
+  <div class="card">
+    <p class="st">cashflow mensual 2025</p>
+    <div class="leg">
+      <span><span class="sq" style="background:#1D9E75;"></span>Cuotas cobradas</span>
+      <span><span class="sq" style="background:#E24B4A;"></span>Compras (egresos)</span>
+      <span><span class="sq" style="background:#378ADD; border-radius:50%;"></span>Flujo neto</span>
+    </div>
+    <div style="position:relative;height:220px;">
+      <canvas id="cf1"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <p class="st">cuotas por cobrar en 2026</p>
+    <div id="cuotas2026bars" class="bar-wrap"></div>
+  </div>
+</div>
+
+<div class="r3">
+  <div class="card">
+    <p class="st">IVA débito vs crédito fiscal</p>
+    <div class="leg">
+      <span><span class="sq" style="background:#F09595;"></span>Débito fiscal</span>
+      <span><span class="sq" style="background:#1D9E75;"></span>Crédito fiscal</span>
+    </div>
+    <div style="position:relative;height:170px;">
+      <canvas id="cf3"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <p class="st">posición IVA mensual (a pagar)</p>
+    <div style="position:relative;height:170px;">
+      <canvas id="cf4"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <p class="st">devoluciones por mes</p>
+    <div style="position:relative;height:170px;">
+      <canvas id="cf5"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="r2b">
+  <div class="card">
+    <p class="st">estado de resultados estimado 2025</p>
+    <table class="tbl">
+      <thead><tr><th>Concepto</th><th>Monto</th><th>%</th></tr></thead>
+      <tbody>
+        <tr><td>Ingresos brutos</td><td>$65.211B</td><td>100.0%</td></tr>
+        <tr><td class="red">— Devoluciones</td><td class="red">($0.371B)</td><td class="red">–0.6%</td></tr>
+        <tr><td class="red">— Comisiones</td><td class="red">($6.675B)</td><td class="red">–10.2%</td></tr>
+        <tr><td style="padding-left:8px;font-weight:500;color:#1a1a1a;">Ingreso neto ventas</td><td>$58.165B</td><td>89.2%</td></tr>
+        <tr><td class="red">— Costo mercadería</td><td class="red">($6.785B)</td><td class="red">–10.4%</td></tr>
+        <tr><td style="padding-left:8px;font-weight:500;color:#1a1a1a;">Resultado bruto</td><td>$51.380B</td><td>78.8%</td></tr>
+        <tr><td class="red">— IVA a pagar</td><td class="red">($3.623B)</td><td class="red">–5.6%</td></tr>
+        <tr><td class="grn" style="font-weight:500;">Resultado neto est.</td><td class="grn">$47.757B</td><td class="grn">73.2%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <p class="st">composición del ingreso — waterfall</p>
+    <div style="position:relative;height:230px;">
+      <canvas id="cf6"></canvas>
+    </div>
+  </div>
+</div>
+
+<footer>Proyecto de portfolio · Gonzalo Dalmasso Müller · 2025</footer>
+
+<script>
+const tc = '#888';
+const gc = 'rgba(0,0,0,0.06)';
+const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+const cuotasCob = [4702,4047,4712,4413,4621,4424,4669,4639,4527,4612,4396,4509];
+const compras   = [536,602,530,514,562,602,591,596,549,592,576,536];
+const flujoNeto = cuotasCob.map((v,i) => v - compras[i]);
+
+new Chart(document.getElementById('cf1'), {
+  type: 'bar',
+  data: {
+    labels: meses,
+    datasets: [
+      { label: 'Cuotas cobradas', data: cuotasCob, backgroundColor: '#1D9E75', order: 2, borderRadius: { topLeft:3, topRight:3 } },
+      { label: 'Compras', data: compras.map(v => -v), backgroundColor: '#E24B4A', order: 2, borderRadius: { bottomLeft:3, bottomRight:3 } },
+      { label: 'Flujo neto', data: flujoNeto, type: 'line', borderColor: '#378ADD', backgroundColor: 'transparent', pointRadius: 3, pointBackgroundColor: '#378ADD', tension: 0.3, order: 1 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: $${Math.abs(ctx.raw).toFixed(0)}M` } } },
+    scales: {
+      x: { ticks: { color: tc, font: { size: 9 }, autoSkip: false, maxRotation: 0 }, grid: { display: false } },
+      y: { ticks: { color: tc, font: { size: 9 }, callback: v => `$${v}M` }, grid: { color: gc } }
+    }
+  }
+});
+
+const meses26 = ['Ene \'26','Feb \'26','Mar \'26','Abr \'26','May \'26','Jun \'26','Jul \'26','Ago \'26','Sep \'26','Oct \'26','Nov \'26'];
+const vals26  = [2490,1725,958,728,502,272,225,176,134,88,43];
+const max26 = Math.max(...vals26);
+const barsEl = document.getElementById('cuotas2026bars');
+meses26.forEach((m, i) => {
+  const pct = (vals26[i] / max26 * 100).toFixed(1);
+  const row = document.createElement('div');
+  row.className = 'bar-row';
+  row.innerHTML = `<span class="bar-label">${m}</span><div class="bar-bg"><div class="bar-fill" style="width:${pct}%;"></div></div><span class="bar-val">$${vals26[i]}M</span>`;
+  barsEl.appendChild(row);
+});
+
+new Chart(document.getElementById('cf3'), {
+  type: 'bar',
+  data: {
+    labels: meses,
+    datasets: [
+      { label: 'Débito', data: [357,314,357,334,341,345,353,363,346,350,325,364], backgroundColor: '#F09595', borderRadius: {topLeft:3,topRight:3} },
+      { label: 'Crédito', data: [46,41,41,44,46,50,46,42,44,44,45,38], backgroundColor: '#1D9E75', borderRadius: {topLeft:3,topRight:3} }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: $${ctx.raw}M` } } },
+    scales: {
+      x: { ticks: { color: tc, font: { size: 9 }, autoSkip: false, maxRotation: 0 }, grid: { display: false } },
+      y: { ticks: { color: tc, font: { size: 9 }, callback: v => `$${v}M` }, grid: { color: gc } }
+    }
+  }
+});
+
+new Chart(document.getElementById('cf4'), {
+  type: 'line',
+  data: {
+    labels: meses,
+    datasets: [{ data: [311,273,316,290,295,296,307,321,302,306,280,326], borderColor: '#E24B4A', backgroundColor: 'rgba(226,75,74,0.08)', fill: true, tension: 0.35, pointRadius: 3, pointBackgroundColor: '#E24B4A' }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `A pagar: $${ctx.raw}M` } } },
+    scales: {
+      x: { ticks: { color: tc, font: { size: 9 }, autoSkip: false, maxRotation: 0 }, grid: { display: false } },
+      y: { ticks: { color: tc, font: { size: 9 }, callback: v => `$${v}M` }, grid: { color: gc }, min: 250 }
+    }
+  }
+});
+
+new Chart(document.getElementById('cf5'), {
+  type: 'bar',
+  data: {
+    labels: meses,
+    datasets: [{ data: [21,25,32,30,30,34,33,27,28,37,32,31], backgroundColor: '#EF9F27', borderRadius: 3 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `$${ctx.raw}M` } } },
+    scales: {
+      x: { ticks: { color: tc, font: { size: 9 }, autoSkip: false, maxRotation: 0 }, grid: { display: false } },
+      y: { ticks: { color: tc, font: { size: 9 }, callback: v => `$${v}M` }, grid: { color: gc } }
+    }
+  }
+});
+
+new Chart(document.getElementById('cf6'), {
+  type: 'bar',
+  data: {
+    labels: ['Ing.\nbruto','Devoluc.','Comisiones','Ing. neto\nventas','Costo\nmerc.','Resultado\nbruto','IVA\na pagar','Resultado\nneto'],
+    datasets: [{
+      data: [65.2, -0.37, -6.68, 58.17, -6.79, 51.38, -3.62, 47.76],
+      backgroundColor: ['#378ADD','#E24B4A','#E24B4A','#7F77DD','#E24B4A','#7F77DD','#E24B4A','#1D9E75'],
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `$${Math.abs(ctx.raw).toFixed(2)}B` } } },
+    scales: {
+      x: { ticks: { color: tc, font: { size: 9 }, autoSkip: false, maxRotation: 20 }, grid: { display: false } },
+      y: { ticks: { color: tc, font: { size: 9 }, callback: v => `$${v}B` }, grid: { color: gc } }
+    }
+  }
+});
+</script>
+</body>
+</html>
