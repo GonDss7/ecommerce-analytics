@@ -27,6 +27,11 @@ Análisis de cashflow, posición de IVA, cuotas cobradas y por cobrar, y estado 
 - Resultado neto estimado: **$47.8B** (margen ~73%)
 
 ---
+### 1. Dashboard Comercial
+🔗 [Ver dashboard →](https://gondss7.github.io/ecommerce-analytics/ecommerce_dashboard_gonzalo.html)
+
+### 2. Dashboard Financiero / Contable
+🔗 [Ver dashboard →](https://gondss7.github.io/ecommerce-analytics/dashboard_financiero_2025.html)
 
 ## 🗂️ Estructura del dataset
 
